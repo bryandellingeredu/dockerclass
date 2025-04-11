@@ -1,0 +1,43 @@
+docker build .					            creates the image from the docker file
+docker build -t {name}:{tag}			    tag is optional
+
+docker images					            shows you the images and ids you just built
+						
+---------------------------------------run-----------------------------------------------------------------------
+docker run -p 3000:80 f1683ec808fd 		    runs the container with id f1683ec808fd local port 3000 docker port 80. (you could also just use first chars of id) (makes a new container)(attached mode default)
+docker run -p 3000:80  -d f1683ec808fd		runs the container detached
+docker run -it f1683ec808fd		            run in interactive mode with terminal (for console apps)
+--rm						                auto remove container after it stops
+--name {containername}				        name the container
+
+--------------------------------ps-----------------------------------------------------------------------------------
+docker ps					see the running processes
+docker ps -a                see all the containers
+
+-------------------starting stopping attaching detaching---------------------------------------------------
+docker stop {containername}	        	        stop the running process named {containername}
+docker start {containername}                    restart the docker container.   (detached mode default)
+docker attach {containername}                   attach to detached container
+docker -a -i {containername}			        restart console app (interactive)
+docker logs {containername}                     see the logs of a detached container
+docker logs -f {containername}                  see the logs of a detached container and keep seeing them
+
+------------------------------container and image management--------------------------------------------------
+
+docker rm {containername} 			            remove container name/s separated by white space
+docker container prune				            remove all containers
+docker rmi 2db8130d0a34				            remove image 
+docker image prune				                remove all unused images
+docker image prune -a				            remove all unused images including named images
+
+docker image inspect {imageid}			        info on an image
+
+------------------------------------------copying-------------------------------------------------------------------------
+docker cp dummy/test.txt  {containername}:/{path}	   copy file into running container
+docker cp dummy/.  {containername}:/{path}             copy folder into running container
+        switch it to copy from running container to local machine
+
+docker cp {containername}:/{path} dummy
+docker cp {containername}:/{path}/text.txt dummy
+
+------------------------------------------------sharing-------------------------------------------------------------------
