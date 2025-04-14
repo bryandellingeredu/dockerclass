@@ -9,6 +9,7 @@ docker run -p 3000:80  -d f1683ec808fd		runs the container detached
 docker run -it f1683ec808fd		            run in interactive mode with terminal (for console apps)
 --rm						                auto remove container after it stops
 --name {containername}				        name the container
+docker run -p 3000:80 -d --rm --name feedback-app feedback-node
 
 --------------------------------ps-----------------------------------------------------------------------------------
 docker ps					see the running processes
@@ -41,3 +42,36 @@ docker cp {containername}:/{path} dummy
 docker cp {containername}:/{path}/text.txt dummy
 
 ------------------------------------------------sharing-------------------------------------------------------------------
+docker tag node-demo:latest academind/node-hello-world              rename to the name of the docker hub repo
+docker login -u                                                       login to docker with access token
+docker push and to get back docker pull
+
+------------------------------------volumes-------------------------------------------------------
+docker volume ls            list docker volumes
+------------------------named volume -v--------------------------
+docker run -p 3000:80 -d --rm --name feedback-app -v feedback:/app/feedback feedback-node       app/feedback is stored in feedback.
+------------------------remove---------------------------
+docker volume rm VOL_NAME or docker volume prune.
+---------------------bind mount-------------------------
+
+docker run -p 3000:80 -d --rm --name feedback-app -v feedback:/app/feedback -v "C:/code/Docker/data-volumes-01-starting-setup:/app" -v/app/node_modules feedback-node 
+
+docker run -p 3000:80 -d --rm --name feedback-app -v feedback:/app/feedback -v "C:/code/Docker/data-volumes-01-starting-setup:/app:ro" -v/app/node_modules feedback-node
+(ro makes it read only) 
+
+shortcut for bind mount is -v "%cd%":/app
+
+--------------------------environment variablese------------------------------------------------------------------------------------
+docker run -p 3000:8000 --env PORT=8000 -d --rm --name feedback-app -v feedback:/app/feedback -v "C:/code/Docker/data-volumes-01-starting-setup:/app" -v/app/node_modules feedback-node 
+--set environment.
+
+docker run -p 3000:8000 --env-file -d --rm --name feedback-app -v feedback:/app/feedback -v "C:/code/Docker/data-volumes-01-starting-setup:/app" -v/app/node_modules feedback-node 
+-- if you have environment file
+
+
+--running with a named network --------------------------------------------------------------
+docker network create my-network
+docker run -d --name mongo --network my-network mongo
+ docker run --name favorites --network my-network -d --rm -p 3000:3000 favorites-node
+
+ (update your app.js 'mongodb://mongo:27017/swfavorites')
