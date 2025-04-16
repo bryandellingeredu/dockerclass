@@ -75,3 +75,8 @@ docker run -d --name mongo --network my-network mongo
  docker run --name favorites --network my-network -d --rm -p 3000:3000 favorites-node
 
  (update your app.js 'mongodb://mongo:27017/swfavorites')
+
+ ----------------------compose
+ docker compose up -d
+ docker compose up --build -d (force a rebuild)
+ docker-compose down -v  (removes volumes as well)
