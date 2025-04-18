@@ -80,3 +80,11 @@ docker run -d --name mongo --network my-network mongo
  docker compose up -d
  docker compose up --build -d (force a rebuild)
  docker-compose down -v  (removes volumes as well)
+
+
+ ---------------------------utility containers
+ docker exec -it  {containername}    npm init                     allows you to run commands against a running container
+ docker run =it node npm init                                     overrides the initial command
+ docker run -it -v C:/code/dockerclass/utility_container:/app node-util npm init
+ docker-compose run --rm {servicename}  {cmd}         run a single service
+
